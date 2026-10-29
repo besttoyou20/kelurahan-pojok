@@ -1,12 +1,13 @@
+
 import multer from "multer";
-import path from "path";
-import fs from "fs";
+import path from "node:path";
+import fs from "node:fs";
 
-const uploadDir = "src/uploads/berita";
+const uploadDir = process.env.VERCEL
+  ? "/tmp/uploads/berita"
+  : path.resolve(process.cwd(), "src/uploads/berita");
 
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir, { recursive: true });
-}
+fs.mkdirSync(uploadDir, { recursive: true });
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -15,7 +16,6 @@ const storage = multer.diskStorage({
 
   filename: (req, file, cb) => {
     const ext = path.extname(file.originalname);
-
     const namaFile = `berita-${Date.now()}${ext}`;
 
     cb(null, namaFile);
@@ -33,10 +33,7 @@ const fileFilter = (req, file, cb) => {
   if (allowedTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {
-    cb(
-      new Error("Format foto harus JPG, JPEG, PNG, atau WEBP"),
-      false
-    );
+    cb(new Error("Format foto harus JPG, JPEG, PNG, atau WEBP"), false);
   }
 };
 
