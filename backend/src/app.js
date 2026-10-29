@@ -9,9 +9,18 @@ import dashboardRTRoutes from "./routes/dashboardRTRoutes.js";
 import beritaRoutes from "./routes/beritaRoutes.js";
 
 const app = express();
+const corsOptions = {
+  origin: [
+    "https://kelurahan-pojok.vercel.app",
+    "http://localhost:5173",
+  ],
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
 
+app.use(cors(corsOptions));
 app.use(express.json());
-app.use(cors());
+
 
 app.use("/api/auth", authRoutes);
 app.use("/api/auth", registrationCodeRoutes);
