@@ -9,14 +9,14 @@ function PreviewSurat() {
   const { id } = useParams();
 
   const [pdfUrl, setPdfUrl] = useState(null);
-
+  const API_URL = import.meta.env.VITE_API_URL;
   useEffect(() => {
     const generatePDF = async () => {
       try {
         const token = localStorage.getItem("token");
 
         const response = await axios.get(
-          `http://localhost:4000/api/pengajuan-surat/${id}/generate`,
+          `${API_URL}/api/pengajuan-surat/${id}/generate`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

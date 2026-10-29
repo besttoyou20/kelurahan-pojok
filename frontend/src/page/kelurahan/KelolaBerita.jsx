@@ -5,6 +5,7 @@ import ProfileBadgeKelurahan from "../../component/kelurahan/ProfileBadgeKelurah
 import axios from "axios";
 function KelolaBerita() {
   const navigate = useNavigate();
+  const API_URL = import.meta.env.VITE_API_URL;
  const [berita, setBerita] = useState([]);
 const [loading, setLoading] = useState(true);
 const [page, setPage] = useState(1);
@@ -18,7 +19,7 @@ useEffect(() => {
       setLoading(true);
 
       const response = await axios.get(
-        `http://localhost:4000/api/berita?page=${page}`
+        `${API_URL}/api/berita?page=${page}`
       );
 
       setBerita(response.data.data || []);
@@ -58,7 +59,7 @@ const handleDelete = async () => {
     const token = localStorage.getItem("token");
 
     await axios.delete(
-      `http://localhost:4000/api/berita/${selectedBerita.id}`,
+      `${API_URL}/api/berita/${selectedBerita.id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -71,7 +72,7 @@ const handleDelete = async () => {
 
     // Refresh data halaman saat ini
     const response = await axios.get(
-      `http://localhost:4000/api/berita?page=${page}`
+      `${API_URL}/api/berita?page=${page}`
     );
 
     setBerita(response.data.data || []);
@@ -286,7 +287,7 @@ const handleDelete = async () => {
 
           {item.foto ? (
             <img
-              src={`http://localhost:4000${item.foto}`}
+              src={`${API_URL}${item.foto}`}
               alt={item.judul}
               className="w-40 h-25 object-cover rounded-md mx-auto"
             />

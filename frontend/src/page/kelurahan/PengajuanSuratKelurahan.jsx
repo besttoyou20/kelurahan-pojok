@@ -10,7 +10,7 @@ import ProfileBadgeKelurahan from "../../component/kelurahan/ProfileBadgeKelurah
 
 function PengajuanSuratKelurahan() {
   const navigate = useNavigate();
-
+  const API_URL = import.meta.env.VITE_API_URL;
   const [pengajuan, setPengajuan] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -32,7 +32,7 @@ function PengajuanSuratKelurahan() {
         const token = localStorage.getItem("token");
 
         const response = await axios.get(
-          "http://localhost:4000/api/pengajuan-surat/kelurahan",
+          `${API_URL}/api/pengajuan-surat/kelurahan`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

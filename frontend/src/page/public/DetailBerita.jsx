@@ -7,7 +7,7 @@ import axios from "axios";
 function DetailBerita() {
   const navigate = useNavigate();
   const { id } = useParams();
-
+  const API_URL = import.meta.env.VITE_API_URL;
   const [berita, setBerita] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -17,7 +17,7 @@ function DetailBerita() {
         setLoading(true);
 
         const response = await axios.get(
-          `http://localhost:4000/api/berita/${id}`
+          `${API_URL}/api/berita/${id}`
         );
 
         setBerita(response.data.data);
@@ -122,7 +122,7 @@ function DetailBerita() {
           {berita.foto ? (
             <div className="w-full h-75 overflow-hidden bg-gray-100">
               <img
-                src={`http://localhost:4000${berita.foto}`}
+                src={`${API_URL}${berita.foto}`}
                 alt={berita.judul}
                 className="w-full h-full object-cover"
               />

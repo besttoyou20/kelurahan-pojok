@@ -5,6 +5,7 @@ import {TriangleAlert, BadgeCheck, FileText } from "lucide-react"
 import axios from "axios";
 function DashboardRT(){
     const navigate = useNavigate();
+    const API_URL = import.meta.env.VITE_API_URL;
 const [dashboard, setDashboard] = useState({
     totalPengajuan: 0,
     diajukan: 0,
@@ -34,8 +35,8 @@ useEffect(() => {
         };
 
         const [hasilProfil, hasilDashboard] = await Promise.allSettled([
-            axios.get("http://localhost:4000/api/auth/me", config),
-            axios.get("http://localhost:4000/api/dashboard-rt", config),
+            axios.get(`${API_URL}/api/auth/me`, config),
+            axios.get(`${API_URL}/api/dashboard-rt`, config),
         ]);
 
         if (hasilProfil.status === "fulfilled") {

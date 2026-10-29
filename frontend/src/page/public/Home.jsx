@@ -20,12 +20,12 @@ import {
 
 function Home() {
   const [berita, setBerita] = useState([]);
-
+  const API_URL = import.meta.env.VITE_API_URL;
   useEffect(() => {
     const fetchBerita = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:4000/api/berita?page=1"
+          `${API_URL}/api/berita?page=1`
         );
 
         setBerita((response.data.data || []).slice(0, 3));
@@ -420,7 +420,7 @@ function Home() {
 
                   {item.foto ? (
                     <img
-                      src={`http://localhost:4000${item.foto}`}
+                      src={`${API_URL}${item.foto}`}
                       alt={item.judul}
                       className="w-full h-full object-cover"
                     />

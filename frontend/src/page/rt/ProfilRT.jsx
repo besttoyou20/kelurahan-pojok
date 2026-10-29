@@ -18,14 +18,14 @@ function ProfilRT() {
   const [editTandaTangan, setEditTandaTangan] = useState(false);
   const [fileTandaTangan, setFileTandaTangan] = useState(null);
   const [namaFileTandaTangan, setNamaFileTandaTangan] = useState("");
-
+  const API_URL = import.meta.env.VITE_API_URL;
   useEffect(() => {
     const fetchProfil = async () => {
       try {
         const token = localStorage.getItem("token");
 
         const response = await axios.get(
-          "http://localhost:4000/api/auth/me",
+          `${API_URL}/api/auth/me`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -69,7 +69,7 @@ const handleSimpanTandaTangan = async () => {
     formData.append("tandaTangan", fileTandaTangan);
 
     const response = await axios.put(
-      "http://localhost:4000/api/auth/tanda-tangan",
+      `${API_URL}/api/auth/tanda-tangan`,
       formData,
       {
         headers: {

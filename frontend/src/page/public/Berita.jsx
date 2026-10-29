@@ -6,7 +6,7 @@ import axios from "axios";
 
 function Berita() {
   const navigate = useNavigate();
-
+  const API_URL = import.meta.env.VITE_API_URL;
   const [berita, setBerita] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -21,7 +21,7 @@ function Berita() {
         setLoading(true);
 
         const response = await axios.get(
-          `http://localhost:4000/api/berita?page=${page}`
+          `${API_URL}/api/berita?page=${page}`
         );
 
         setBerita(response.data.data || []);
@@ -165,7 +165,7 @@ function Berita() {
 
                   {item.foto ? (
                     <img
-                      src={`http://localhost:4000${item.foto}`}
+                      src={`${API_URL}${item.foto}`}
                       alt={item.judul}
                       className="w-full h-full object-cover"
                     />

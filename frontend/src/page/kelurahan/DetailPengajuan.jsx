@@ -7,7 +7,7 @@ import ProfileBadgeKelurahan from "../../component/kelurahan/ProfileBadgeKelurah
 function DetailPengajuan() {
   const { id } = useParams();
   const navigate = useNavigate();
-
+  const API_URL = import.meta.env.VITE_API_URL;
   const [pengajuan, setPengajuan] = useState(null);
   const [loading, setLoading] = useState(true);
   const [loadingStatus, setLoadingStatus] = useState(false);
@@ -27,7 +27,7 @@ function DetailPengajuan() {
         const token = localStorage.getItem("token");
 
         const response = await axios.get(
-          `http://localhost:4000/api/pengajuan-surat/${id}`,
+          `${API_URL}/api/pengajuan-surat/${id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -67,7 +67,7 @@ function DetailPengajuan() {
         const token = localStorage.getItem("token");
 
         const response = await axios.get(
-          `http://localhost:4000/api/pengajuan-surat/${id}/generate`,
+          `${API_URL}/api/pengajuan-surat/${id}/generate`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -108,7 +108,7 @@ function DetailPengajuan() {
     const token = localStorage.getItem("token");
 
     await axios.put(
-      `http://localhost:4000/api/pengajuan-surat/${id}/status`,
+      `${API_URL}/api/pengajuan-surat/${id}/status`,
       {},
       {
         headers: {

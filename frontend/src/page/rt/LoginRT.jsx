@@ -8,6 +8,7 @@ function LoginRT(){
     const [showPassword, setShowPassword] = useState(false);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const API_URL = import.meta.env.VITE_API_URL;
     const [popup, setPopup] = useState({
       show: false,
       title: "",
@@ -19,7 +20,7 @@ function LoginRT(){
 
         try {
           const response = await axios.post(
-            "http://localhost:4000/api/auth/login-rt",
+            `${API_URL}/api/auth/login-rt`,
             {
               username,
               password,

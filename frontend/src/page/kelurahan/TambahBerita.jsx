@@ -6,7 +6,7 @@ import ProfileBadgeKelurahan from "../../component/kelurahan/ProfileBadgeKelurah
 function TambahBerita() {
   const navigate = useNavigate();
   const { id } = useParams();
-
+  const API_URL = import.meta.env.VITE_API_URL;
   const isEdit = Boolean(id);
 
   const [judul, setJudul] = useState("");
@@ -25,7 +25,7 @@ function TambahBerita() {
     const fetchBerita = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:4000/api/berita/${id}`
+          `${API_URL}/api/berita/${id}`
         );
 
         const data = response.data.data;
@@ -75,7 +75,7 @@ function TambahBerita() {
 
       if (isEdit) {
   await axios.put(
-    `http://localhost:4000/api/berita/${id}`,
+    `${API_URL}/api/berita/${id}`,
     formData,
     {
       headers: {
@@ -87,7 +87,7 @@ function TambahBerita() {
   setShowSuccess(true);
 } else {
   await axios.post(
-    "http://localhost:4000/api/berita",
+    `${API_URL}/api/berita`,
     formData,
     {
       headers: {
@@ -221,7 +221,7 @@ function TambahBerita() {
                 </p>
 
                 <img
-                  src={`http://localhost:4000${fotoLama}`}
+                  src={`${API_URL}${fotoLama}`}
                   alt="Foto berita"
                   className="w-40 h-25 object-cover rounded-md border border-[#E7B9A7]"
                 />

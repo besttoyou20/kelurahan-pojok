@@ -16,13 +16,13 @@ function RegisterRT(){
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [noRW, setNoRW] = useState("");
-
+    const API_URL = import.meta.env.VITE_API_URL;
    const handleVerify = async (e) => {
   e.preventDefault();
 
   try {
     const response = await axios.post(
-      "http://localhost:4000/api/auth/verify",
+      `${API_URL}/api/auth/verify`,
       {
         kodeRegistrasi,
       }
@@ -47,7 +47,7 @@ function RegisterRT(){
 
   try {
     const response = await axios.post(
-      "http://localhost:4000/api/auth/register-rt",
+      `${API_URL}/api/auth/register-rt`,
       {
         kodeRegistrasi,
         noRW,

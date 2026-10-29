@@ -14,12 +14,13 @@ const navigate = useNavigate();
     message: "",
     success: false,
   });
+  const API_URL = import.meta.env.VITE_API_URL;
   const handleLogin = async (e) => {
   e.preventDefault();
 
   try {
     const response = await axios.post(
-      "http://localhost:4000/api/auth/login-kelurahan",
+      `${API_URL}/api/auth/login-kelurahan`,
       {
         username,
         password,

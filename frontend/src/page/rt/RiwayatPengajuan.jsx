@@ -19,7 +19,7 @@ function RiwayatPengajuan() {
   const [namaPemohon, setNamaPemohon] = useState("");
   const [nik, setNik] = useState("");
   const [status, setStatus] = useState("");
-
+  const API_URL = import.meta.env.VITE_API_URL;
   // =========================
   // Ambil data riwayat
   // =========================
@@ -29,7 +29,7 @@ function RiwayatPengajuan() {
         const token = localStorage.getItem("token");
 
         const response = await axios.get(
-          "http://localhost:4000/api/pengajuan-surat/riwayat",
+          `${API_URL}/api/pengajuan-surat/riwayat`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

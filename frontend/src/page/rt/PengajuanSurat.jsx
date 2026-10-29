@@ -5,7 +5,7 @@ import axios from "axios";
 
 function PengajuanSurat() {
   const navigate = useNavigate();
-
+  const API_URL = import.meta.env.VITE_API_URL;
   const [formData, setFormData] = useState({
     noSurat: "",
     tahun: "",
@@ -39,7 +39,7 @@ useEffect(() => {
       }
 
       const response = await axios.get(
-        "http://localhost:4000/api/auth/me",
+        `${API_URL}/api/auth/me`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -77,7 +77,7 @@ useEffect(() => {
       const token = localStorage.getItem("token");
 
       const response = await axios.post(
-        "http://localhost:4000/api/pengajuan-surat",
+        `${API_URL}/api/pengajuan-surat`,
         formData,
         {
           headers: {
