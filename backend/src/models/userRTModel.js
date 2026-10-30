@@ -46,13 +46,14 @@ export const findUserRTByUsername = async (username, db = connectDB) => {
 export const updateTandaTanganRT = async (
   userId,
   tandaTangan,
+  format,
   db = connectDB
 ) => {
   const [result] = await db.query(
     `UPDATE users_rt
-     SET tanda_tangan = ?
+     SET tanda_tangan = ?, tanda_tangan_format = ?
      WHERE id = ?`,
-    [tandaTangan, userId]
+    [tandaTangan, format, userId]
   );
 
   return result;
@@ -60,7 +61,7 @@ export const updateTandaTanganRT = async (
 
 export const findUserRTById = async (id, db = connectDB) => {
   const [rows] = await db.query(
-    `SELECT id, tanda_tangan
+    `SELECT id, tanda_tangan, tanda_tangan_format
      FROM users_rt
      WHERE id = ?`,
     [id]

@@ -1,4 +1,3 @@
-import path from "path";
 import generateSuratPDF from "../utils/generateSuratPDF.js";
 import { findUserRTById} from "../models/userRTModel.js";
 import {
@@ -8,6 +7,7 @@ import {
   getSemuaPengajuanSurat,
   updateStatusPengajuan
 } from "../models/pengajuanSuratModel.js";
+import getTandaTanganFromCloudinary from "../utils/getTandaTanganFromCloudinary.js";
 export const tambahPengajuanSurat = async (req, res) => {
   try {
     const {
@@ -57,6 +57,8 @@ export const tambahPengajuanSurat = async (req, res) => {
       agama,
       pekerjaan,
       tujuanSurat,
+      tandaTanganSnapshot: userRT.tanda_tangan,
+      tandaTanganFormatSnapshot: userRT.tanda_tangan_format,
     });
 
     res.status(201).json({
@@ -85,21 +87,23 @@ export const generateSurat = async (req, res) => {
       });
     }
 
-    let tandaTanganPath = null;
+    let tandaTanganBuffer = null;
 
-    if (pengajuan.tanda_tangan) {
-      tandaTanganPath = path.resolve(
-        "src",
-        pengajuan.tanda_tangan.replace(/^\/+/, "")
+    if (
+      pengajuan.tanda_tangan_snapshot &&
+      pengajuan.tanda_tangan_format_snapshot
+    ) {
+      tandaTanganBuffer = await getTandaTanganFromCloudinary(
+        pengajuan.tanda_tangan_snapshot,
+        pengajuan.tanda_tangan_format_snapshot
       );
     }
 
     generateSuratPDF(
       res,
       pengajuan,
-      tandaTanganPath
+      tandaTanganBuffer
     );
-
   } catch (error) {
     console.error("Error generate surat:", error);
 
@@ -108,7 +112,6 @@ export const generateSurat = async (req, res) => {
     });
   }
 };
-
 export const getRiwayatPengajuan = async (req, res) => {
   try {
     const userId = req.user.id;

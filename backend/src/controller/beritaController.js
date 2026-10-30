@@ -1,5 +1,3 @@
-import fs from "fs";
-import path from "path";
 import {
   createBerita,
   getSemuaBerita,
@@ -8,7 +6,9 @@ import {
   updateBerita,
   deleteBerita,
 } from "../models/kelurahan/beritaModel.js";
-
+import uploadToCloudinary, {
+  deleteFromCloudinary,
+} from "../utils/uploadToCloudinary.js";
 
 // =========================
 // TAMBAH BERITA
@@ -23,9 +23,11 @@ export const tambahBerita = async (req, res) => {
       });
     }
 
-    const foto = req.file
-      ? `/uploads/berita/${req.file.filename}`
-      : null;
+    const uploadResult = req.file
+  ? await uploadToCloudinary(req.file.buffer)
+  : null;
+
+    const foto = uploadResult?.secure_url || null;
 
     const result = await createBerita({
       judul,
@@ -126,9 +128,12 @@ export const editBerita = async (req, res) => {
       });
     }
 
-    const foto = req.file
-      ? `/uploads/berita/${req.file.filename}`
-      : berita.foto;
+    let foto = berita.foto;
+
+    if (req.file) {
+      const uploadResult = await uploadToCloudinary(req.file.buffer);
+      foto = uploadResult.secure_url;
+    }
 
     await updateBerita(id, {
       judul,
@@ -160,23 +165,12 @@ export const hapusBerita = async (req, res) => {
       });
     }
 
-    // Hapus data berita dari database
+    // Hapus foto dari Cloudinary
+    if (berita.foto) {
+      await deleteFromCloudinary(berita.foto);
+    }
+     // Hapus data berita dari database
     await deleteBerita(id);
-
-    // Hapus foto jika berita memiliki foto
- if (berita.foto) {
-  const filePath = path.resolve(`src${berita.foto}`);
-
-  console.log("Foto yang akan dihapus:", filePath);
-
-  if (fs.existsSync(filePath)) {
-    fs.unlinkSync(filePath);
-    console.log("Foto berhasil dihapus");
-  } else {
-    console.log("File foto tidak ditemukan:", filePath);
-  }
-}
-
     return res.status(200).json({
       message: "Berita berhasil dihapus",
     });

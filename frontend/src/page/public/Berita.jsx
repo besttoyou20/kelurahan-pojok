@@ -165,7 +165,9 @@ function Berita() {
 
                   {item.foto ? (
                     <img
-                      src={`${API_URL}${item.foto}`}
+                      src={ item.foto.startsWith("http")
+                              ? item.foto
+                              : `${API_URL}${item.foto}`}
                       alt={item.judul}
                       className="w-full h-full object-cover"
                     />

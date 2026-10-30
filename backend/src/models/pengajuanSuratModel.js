@@ -16,6 +16,8 @@ export const createPengajuanSurat = async (
     agama,
     pekerjaan,
     tujuanSurat,
+    tandaTanganSnapshot,
+    tandaTanganFormatSnapshot,
   },
   db = connectDB
 ) => {
@@ -35,9 +37,11 @@ export const createPengajuanSurat = async (
       status_perkawinan,
       agama,
       pekerjaan,
-      tujuan_surat
+      tujuan_surat,
+      tanda_tangan_snapshot,
+      tanda_tangan_format_snapshot
     )
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [
       userId,
       noSurat,
@@ -53,6 +57,8 @@ export const createPengajuanSurat = async (
       agama,
       pekerjaan,
       tujuanSurat,
+      tandaTanganSnapshot,
+      tandaTanganFormatSnapshot,
     ]
   );
 
@@ -65,8 +71,7 @@ export const findPengajuanSuratById = async (id, db = connectDB) => {
       pengajuan_surat.*,
       users_rt.nama_ketua_rt,
       users_rt.nomor_rt,
-      users_rt.nomor_rw,
-      users_rt.tanda_tangan
+      users_rt.nomor_rw
     FROM pengajuan_surat
     JOIN users_rt 
       ON pengajuan_surat.user_id = users_rt.id
@@ -76,7 +81,6 @@ export const findPengajuanSuratById = async (id, db = connectDB) => {
 
   return rows[0];
 };
-
 export const getRiwayatPengajuanByUserId = async (
   userId,
   db = connectDB

@@ -1,26 +1,8 @@
-
 import multer from "multer";
-import path from "node:path";
-import fs from "node:fs";
+import cloudinary from "../config/cloudinary.js";
+import { Readable } from "node:stream";
 
-const uploadDir = process.env.VERCEL
-  ? "/tmp/uploads/berita"
-  : path.resolve(process.cwd(), "src/uploads/berita");
-
-fs.mkdirSync(uploadDir, { recursive: true });
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, uploadDir);
-  },
-
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    const namaFile = `berita-${Date.now()}${ext}`;
-
-    cb(null, namaFile);
-  },
-});
+const storage = multer.memoryStorage();
 
 const fileFilter = (req, file, cb) => {
   const allowedTypes = [

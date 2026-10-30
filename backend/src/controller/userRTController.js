@@ -1,8 +1,9 @@
 import bcrypt from "bcrypt";
 import connectDB from "../database/db.js";
+import uploadTandaTanganToCloudinary from "../utils/uploadTandaTanganToCloudinary.js";
 import { createUserRT } from "../models/userRTModel.js";
 import { useRegistrationCode } from "../models/registrationCodeModel.js";
-import { updateTandaTanganRT, getProfilRTById} from "../models/userRTModel.js";
+import { updateTandaTanganRT, getProfilRTById, findUserRTById} from "../models/userRTModel.js";
 export const registerRT = async (req, res) => {
   let connection;
 
@@ -128,24 +129,22 @@ export const uploadTandaTanganRT = async (req, res) => {
 
     const userId = req.user.id;
 
-    const tandaTangan = `/uploads/tanda-tangan/${req.file.filename}`;
+    const uploadResult = await uploadTandaTanganToCloudinary(
+      req.file.buffer
+    );
 
     await updateTandaTanganRT(
       userId,
-      tandaTangan
+      uploadResult.public_id,
+      uploadResult.format
     );
 
-   return res.status(200).json({
-  message: "Tanda tangan berhasil disimpan",
-  tandaTangan,
-  namaFileAsli: req.file.originalname,
-});
-
+    return res.status(200).json({
+      message: "Tanda tangan berhasil disimpan",
+      namaFileAsli: req.file.originalname,
+    });
   } catch (error) {
-    console.error(
-      "Error upload tanda tangan RT:",
-      error
-    );
+    console.error("Error upload tanda tangan RT:", error);
 
     return res.status(500).json({
       message: "Gagal menyimpan tanda tangan",

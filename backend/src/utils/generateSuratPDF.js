@@ -28,7 +28,7 @@ const formatTanggal = (tanggal) => {
 };
 const tanggalSurat = formatTanggal(new Date());
 
-const generateSuratPDF = (res, data, tandaTanganPath) => {
+const generateSuratPDF = (res, data, tandaTanganBuffer) => {
   const doc = new PDFDocument({
     size: "A4",
     margin: 50,
@@ -230,19 +230,19 @@ doc.text(
   });
 
   // Tanda tangan RT
-  if (tandaTanganPath) {
-    try {
-      doc.image(tandaTanganPath, 385, signatureY + 20, {
-        fit: [120, 50],
-        align: "center",
-      });
-    } catch (error) {
-      console.log(
-        "Tanda tangan tidak dapat dimuat:",
-        error.message
-      );
-    }
+if (tandaTanganBuffer) {
+  try {
+    doc.image(tandaTanganBuffer, 385, signatureY + 20, {
+      fit: [120, 50],
+      align: "center",
+    });
+  } catch (error) {
+    console.log(
+      "Tanda tangan tidak dapat dimuat:",
+      error.message
+    );
   }
+}
 
   doc.text(
     data.nama_ketua_rt || "____________________",

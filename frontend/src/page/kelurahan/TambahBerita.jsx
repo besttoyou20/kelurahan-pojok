@@ -221,7 +221,7 @@ function TambahBerita() {
                 </p>
 
                 <img
-                  src={`${API_URL}${fotoLama}`}
+                  src={fotoLama}
                   alt="Foto berita"
                   className="w-40 h-25 object-cover rounded-md border border-[#E7B9A7]"
                 />

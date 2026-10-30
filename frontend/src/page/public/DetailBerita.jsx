@@ -122,7 +122,9 @@ function DetailBerita() {
           {berita.foto ? (
             <div className="w-full h-75 overflow-hidden bg-gray-100">
               <img
-                src={`${API_URL}${berita.foto}`}
+                src={ berita.foto.startsWith("http")
+                        ? berita.foto
+                        : `${API_URL}${berita.foto}`}
                 alt={berita.judul}
                 className="w-full h-full object-cover"
               />
