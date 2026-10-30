@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-
+import path from "node:path";
 import registrationCodeRoutes from "./routes/registrationCodeRoutes.js";
 import userRTRoutes from "./routes/userRTRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
@@ -29,9 +29,13 @@ app.use("/api/pengajuan-surat", pengajuanSuratRoutes);
 app.use("/api/dashboard-rt", dashboardRTRoutes);
 app.use("/api/berita", beritaRoutes);
 
+const uploadDir = process.env.VERCEL
+  ? "/tmp/uploads/berita"
+  : path.resolve(process.cwd(), "src/uploads/berita");
+
 app.use(
   "/uploads/berita",
-  express.static("src/uploads/berita")
+  express.static(uploadDir)
 );
 
 app.get("/", (req, res) => {
