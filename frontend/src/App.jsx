@@ -25,6 +25,8 @@ import DetailPengajuan from "./page/kelurahan/DetailPengajuan.jsx";
 import KelolaBerita from "./page/kelurahan/KelolaBerita.jsx";
 import TambahBerita from "./page/kelurahan/TambahBerita.jsx";
 import KelolaKodeRegistrasi from "./page/kelurahan/KelolaKodeRegistrasi.jsx";
+import CatatanKematian from "./page/kelurahan/CatatanKematian.jsx";
+
 function App() {
   return (
     <div className="min-h-screen ">
@@ -105,6 +107,9 @@ function App() {
           />
           <Route
             path="/kelola-kode-registrasi" element={<KelolaKodeRegistrasi />}
+          />
+           <Route
+            path="/catatan-kematian" element={<CatatanKematian />}
           />
         </Route>
       </Routes>
