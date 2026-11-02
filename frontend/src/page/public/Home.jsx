@@ -420,7 +420,7 @@ function Home() {
 
                   {item.foto ? (
                     <img
-                      src={`${API_URL}${item.foto}`}
+                      src={item.foto}
                       alt={item.judul}
                       className="w-full h-full object-cover"
                     />
