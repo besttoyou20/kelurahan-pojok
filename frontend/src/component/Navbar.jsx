@@ -180,13 +180,7 @@ const isActive =
                 )}
               </div>
 
-              <Link
-                to="/kontak"
-                onClick={() => setOpen(false)}
-                className="px-6 py-3 text-lg font-bold text-[#8B0502] hover:text-[#B3910B]"
-              >
-                Kontak
-              </Link>
+               
 
             </div>
 
