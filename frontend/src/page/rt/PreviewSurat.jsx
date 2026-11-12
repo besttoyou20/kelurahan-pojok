@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import ProfileBadge from "../../component/rt/ProfileBadge.jsx";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, FileText, Download, ExternalLink } from "lucide-react";
 
 function PreviewSurat() {
   const navigate = useNavigate();
@@ -97,24 +97,63 @@ function PreviewSurat() {
           Preview Surat Pengantar
         </h2>
 
-        {/* PDF */}
-        <div className="w-full h-125 sm:h-162.5 lg:h-175 bg-white border border-gray-300 overflow-hidden">
+        {pdfUrl ? (
+          <>
+            {/* Tampilan HP */}
+            <div className="md:hidden w-full min-h-100 bg-white border border-gray-300 rounded-md p-5 flex flex-col items-center justify-center text-center">
 
-          {pdfUrl ? (
-            <iframe
-              src={pdfUrl}
-              title="Preview Surat Pengantar"
-              className="w-full h-full"
-            />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center">
-              <p className="text-sm text-gray-500">
-                Memuat surat...
+              <FileText
+                size={55}
+                className="text-[#8B0502] mb-4"
+              />
+
+              <p className="text-sm font-semibold text-[#8B0502] mb-2">
+                Surat Pengantar Berhasil Dibuat
               </p>
-            </div>
-          )}
 
-        </div>
+              <p className="text-xs text-gray-500 mb-6">
+                Silakan buka atau unduh surat untuk melihat dokumen PDF.
+              </p>
+
+              <a
+                href={pdfUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full max-w-70 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-4 rounded-xl transition"
+              >
+                <ExternalLink size={18} />
+                Buka PDF
+              </a>
+
+              <a
+                href={pdfUrl}
+                download={`surat-pengantar-${id}.pdf`}
+                className="w-full max-w-70 flex items-center justify-center gap-2 mt-3 border border-[#8B0502] text-[#8B0502] hover:bg-[#FFF5D6] text-sm font-semibold py-4 rounded-xl transition"
+              >
+                <Download size={18} />
+                Download PDF
+              </a>
+
+            </div>
+
+            {/* Tampilan Tablet dan Desktop */}
+            <div className="hidden md:block w-full h-162.5 lg:h-175 bg-white border border-gray-300 overflow-hidden">
+
+              <iframe
+                src={pdfUrl}
+                title="Preview Surat Pengantar"
+                className="w-full h-full"
+              />
+
+            </div>
+          </>
+        ) : (
+          <div className="w-full h-125 flex items-center justify-center bg-white border border-gray-300">
+            <p className="text-sm text-gray-500">
+              Memuat surat...
+            </p>
+          </div>
+        )}
 
       </div>
 
