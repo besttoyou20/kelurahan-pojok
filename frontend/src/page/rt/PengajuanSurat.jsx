@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ProfileBadge from "../../component/rt/ProfileBadge.jsx";
@@ -6,6 +7,7 @@ import axios from "axios";
 function PengajuanSurat() {
   const navigate = useNavigate();
   const API_URL = import.meta.env.VITE_API_URL;
+
   const [formData, setFormData] = useState({
     noSurat: "",
     tahun: "",
@@ -22,42 +24,42 @@ function PengajuanSurat() {
     tujuanSurat: "",
   });
 
-const [profil, setProfil] = useState(null);
-const [loadingProfil, setLoadingProfil] = useState(true);
-const [errorProfil, setErrorProfil] = useState(false);
+  const [profil, setProfil] = useState(null);
+  const [loadingProfil, setLoadingProfil] = useState(true);
+  const [errorProfil, setErrorProfil] = useState(false);
 
-const sudahTandaTangan = Boolean(profil?.tandaTangan);
+  const sudahTandaTangan = Boolean(profil?.tandaTangan);
 
-useEffect(() => {
-  const fetchProfil = async () => {
-    try {
-      const token = localStorage.getItem("token");
+  useEffect(() => {
+    const fetchProfil = async () => {
+      try {
+        const token = localStorage.getItem("token");
 
-      if (!token) {
-        setErrorProfil(true);
-        return;
-      }
-
-      const response = await axios.get(
-        `${API_URL}/api/auth/me`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+        if (!token) {
+          setErrorProfil(true);
+          return;
         }
-      );
 
-      setProfil(response.data.data);
-    } catch (error) {
-      console.error("Error mengambil profil RT:", error);
-      setErrorProfil(true);
-    } finally {
-      setLoadingProfil(false);
-    }
-  };
+        const response = await axios.get(
+          `${API_URL}/api/auth/me`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
-  fetchProfil();
-}, []);
+        setProfil(response.data.data);
+      } catch (error) {
+        console.error("Error mengambil profil RT:", error);
+        setErrorProfil(true);
+      } finally {
+        setLoadingProfil(false);
+      }
+    };
+
+    fetchProfil();
+  }, []);
 
   // Handle perubahan input
   const handleChange = (e) => {
@@ -102,30 +104,29 @@ useEffect(() => {
   };
 
   return (
-    <div className="min-h-screen bg-[#FFFDE9] px-9 py-8">
+    <div className="min-h-screen bg-[#FFFDE9] px-4 py-5 sm:px-6 lg:px-9 sm:py-8">
 
       {/* ================= HEADER ================= */}
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-semibold text-[#8B0502]">
+      <div className="flex items-center justify-between gap-3 mb-6">
+        <h1 className="text-xl sm:text-2xl font-semibold text-[#8B0502]">
           Pengajuan Surat
         </h1>
 
         <ProfileBadge />
       </div>
 
-
       {/* ===================================================== */}
       {/* JIKA BELUM ADA TANDA TANGAN                          */}
       {/* ===================================================== */}
 
-     {loadingProfil ? (
-        <div className="bg-white rounded-xl border border-[#E7B9A7] p-8 text-center">
+      {loadingProfil ? (
+        <div className="bg-white rounded-xl border border-[#E7B9A7] p-4 sm:p-8 text-center">
           <p className="text-sm text-[#8B0502]">
             Memuat profil...
           </p>
         </div>
       ) : errorProfil || !profil ? (
-        <div className="bg-white rounded-xl border border-[#E7B9A7] p-8 text-center">
+        <div className="bg-white rounded-xl border border-[#E7B9A7] p-4 sm:p-8 text-center">
           <h2 className="text-lg font-semibold text-[#8B0502] mb-2">
             Gagal Memuat Profil
           </h2>
@@ -135,7 +136,7 @@ useEffect(() => {
           </p>
         </div>
       ) : !sudahTandaTangan ? (
-        <div className="bg-white rounded-xl border border-[#E7B9A7] p-8 text-center">
+        <div className="bg-white rounded-xl border border-[#E7B9A7] p-4 sm:p-8 text-center">
 
           <h2 className="text-lg font-semibold text-[#8B0502] mb-2">
             Tanda Tangan Belum Ditambahkan
@@ -149,7 +150,7 @@ useEffect(() => {
           <button
             type="button"
             onClick={() => navigate("/profil-rt")}
-            className="bg-[#8B0502] text-white px-5 py-2.5 rounded-lg hover:bg-[#700402] transition"
+            className="w-full sm:w-auto bg-[#8B0502] text-white px-5 py-2.5 rounded-lg hover:bg-[#700402] transition"
           >
             Tambahkan Tanda Tangan
           </button>
@@ -161,9 +162,9 @@ useEffect(() => {
         /* JIKA SUDAH ADA TANDA TANGAN → TAMPILKAN FORM         */
         /* ===================================================== */
 
-        <div className="w-150 mx-auto bg-[#FFFDE9] border border-[#E7B9A7] rounded-xl px-6 py-8">
+        <div className="w-[94%] max-w-120 mx-auto bg-[#FFFDE9] border border-[#E7B9A7] rounded-xl px-4 py-5 sm:px-6 sm:py-8">
 
-          <div className="w-125 mx-auto">
+          <div className="w-full max-w-106 mx-auto">
 
             {/* Judul Form */}
             <h2 className="text-lg font-semibold text-[#8B0502] mb-5">
@@ -173,10 +174,10 @@ useEffect(() => {
             <form onSubmit={handleSubmit}>
 
               {/* ================= NO SURAT + TAHUN ================= */}
-              <div className="flex gap-4">
+              <div className="flex flex-col sm:flex-row gap-4">
 
                 {/* No. Surat */}
-                <div className="w-60">
+                <div className="w-full sm:flex-1 min-w-0">
                   <label className="block text-[11px] font-medium text-[#8B0502] mb-1">
                     No. Surat
                   </label>
@@ -192,7 +193,7 @@ useEffect(() => {
                 </div>
 
                 {/* Tahun */}
-                <div className="w-60">
+                <div className="w-full sm:flex-1 min-w-0">
                   <label className="block text-[11px] font-medium text-[#8B0502] mb-1">
                     Tahun
                   </label>
@@ -208,7 +209,6 @@ useEffect(() => {
                 </div>
 
               </div>
-
 
               {/* ================= NAMA LENGKAP ================= */}
               <div className="mt-4">
@@ -226,12 +226,11 @@ useEffect(() => {
                 />
               </div>
 
-
               {/* ================= TEMPAT + TANGGAL LAHIR ================= */}
-              <div className="flex gap-4 mt-4">
+              <div className="flex flex-col sm:flex-row gap-4 mt-4">
 
                 {/* Tempat Lahir */}
-                <div className="w-60">
+                <div className="w-full sm:flex-1 min-w-0">
                   <label className="block text-[11px] font-medium text-[#8B0502] mb-1">
                     Tempat Lahir
                   </label>
@@ -247,7 +246,7 @@ useEffect(() => {
                 </div>
 
                 {/* Tanggal Lahir */}
-                <div className="w-60">
+                <div className="w-full sm:flex-1 min-w-0">
                   <label className="block text-[11px] font-medium text-[#8B0502] mb-1">
                     Tanggal Lahir
                   </label>
@@ -263,7 +262,6 @@ useEffect(() => {
                 </div>
 
               </div>
-
 
               {/* ================= NIK ================= */}
               <div className="mt-4">
@@ -281,7 +279,6 @@ useEffect(() => {
                 />
               </div>
 
-
               {/* ================= NAMA KK ================= */}
               <div className="mt-4">
                 <label className="block text-[11px] font-medium text-[#8B0502] mb-1">
@@ -298,7 +295,6 @@ useEffect(() => {
                 />
               </div>
 
-
               {/* ================= ALAMAT ================= */}
               <div className="mt-4">
                 <label className="block text-[11px] font-medium text-[#8B0502] mb-1">
@@ -314,7 +310,6 @@ useEffect(() => {
                   className="w-full px-3 py-2 border border-[#E7B9A7] rounded-md bg-white text-xs outline-none resize-none focus:border-[#FFC83D]"
                 />
               </div>
-
 
               {/* ================= JENIS KELAMIN ================= */}
               <div className="mt-4">
@@ -342,7 +337,6 @@ useEffect(() => {
                   </option>
                 </select>
               </div>
-
 
               {/* ================= STATUS PERKAWINAN ================= */}
               <div className="mt-4">
@@ -378,7 +372,6 @@ useEffect(() => {
                   </option>
                 </select>
               </div>
-
 
               {/* ================= AGAMA ================= */}
               <div className="mt-4">
@@ -423,7 +416,6 @@ useEffect(() => {
                 </select>
               </div>
 
-
               {/* ================= PEKERJAAN ================= */}
               <div className="mt-4">
                 <label className="block text-[11px] font-medium text-[#8B0502] mb-1">
@@ -439,7 +431,6 @@ useEffect(() => {
                   className="w-full h-9 px-3 border border-[#E7B9A7] rounded-md bg-white text-xs outline-none focus:border-[#FFC83D]"
                 />
               </div>
-
 
               {/* ================= TUJUAN SURAT ================= */}
               <div className="mt-4">
@@ -457,12 +448,11 @@ useEffect(() => {
                 />
               </div>
 
-
               {/* ================= BUTTON ================= */}
               <div className="flex justify-end mt-6">
                 <button
                   type="submit"
-                  className="px-10 py-3 bg-[#FFC83D] border border-[#8B0502] rounded-lg text-md font-semibold text-[#8B0502] shadow-sm cursor-pointer hover:bg-[#f5bc25] transition"
+                  className="w-full sm:w-auto px-6 sm:px-10 py-3 bg-[#FFC83D] border border-[#8B0502] rounded-lg text-sm sm:text-md font-semibold text-[#8B0502] shadow-sm cursor-pointer hover:bg-[#f5bc25] transition"
                 >
                   Ajukan Surat
                 </button>

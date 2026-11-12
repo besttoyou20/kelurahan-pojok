@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -20,9 +21,8 @@ function RiwayatPengajuan() {
   const [nik, setNik] = useState("");
   const [status, setStatus] = useState("");
   const API_URL = import.meta.env.VITE_API_URL;
-  // =========================
+
   // Ambil data riwayat
-  // =========================
   useEffect(() => {
     const fetchRiwayat = async () => {
       try {
@@ -56,9 +56,7 @@ function RiwayatPengajuan() {
     fetchRiwayat();
   }, []);
 
-  // =========================
   // Format tanggal
-  // =========================
   const formatTanggal = (tanggal) => {
     if (!tanggal) return "-";
 
@@ -71,9 +69,7 @@ function RiwayatPengajuan() {
     });
   };
 
-  // =========================
   // Filter data
-  // =========================
   const dataFiltered = riwayat.filter((item) => {
     const tanggalItem = item.created_at
       ? new Date(item.created_at)
@@ -105,9 +101,7 @@ function RiwayatPengajuan() {
     );
   });
 
-  // =========================
   // Badge status
-  // =========================
   const getStatusStyle = (status) => {
     if (status === "selesai") {
       return "bg-green-100 text-green-700";
@@ -125,60 +119,39 @@ function RiwayatPengajuan() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FFFDE9] px-9 py-8">
+    <div className="min-h-screen bg-[#FFFDE9] px-3 py-5 sm:px-6 sm:py-8 lg:px-9">
 
-      {/* =========================
-          HEADER
-      ========================= */}
-      <div className="flex items-center justify-between mb-8">
-        <h1 className="text-2xl font-semibold text-[#8B0502]">
+      {/* HEADER */}
+      <div className="flex flex-col gap-4 mb-6 sm:flex-row sm:items-center sm:justify-between">
+        <h1 className="text-xl sm:text-2xl font-semibold text-[#8B0502]">
           Riwayat Pengajuan
         </h1>
 
-        <ProfileBadge />
+        <div className="self-end sm:self-auto">
+          <ProfileBadge />
+        </div>
       </div>
 
-      {/* =========================
-          FILTER
-      ========================= */}
-      <div className="flex flex-wrap items-center gap-5 mb-4">
+      {/* FILTER */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-5">
 
         {/* Cari Tanggal */}
-        <div className="relative w-33.75">
+        <div className="relative w-full min-w-0">
           <input
             type="date"
             value={tanggal}
             onChange={(e) => setTanggal(e.target.value)}
-            className="
-              w-full
-              h-10
-              rounded-md
-              border
-              border-[#E7B9A7]
-              bg-white
-              px-3
-              text-xs
-              text-gray-600
-              outline-none
-              focus:border-[#8B0502]
-            "
+            className="w-full h-10 rounded-md border border-[#E7B9A7] bg-white px-3 pr-8 text-xs text-gray-600 outline-none focus:border-[#8B0502]"
           />
 
           <CalendarDays
             size={16}
-            className="
-              absolute
-              right-3
-              top-1/2
-              -translate-y-1/2
-              text-gray-500
-              pointer-events-none
-            "
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none"
           />
         </div>
 
         {/* Cari Pemohon */}
-        <div className="relative w-31.5">
+        <div className="relative w-full min-w-0">
           <input
             type="text"
             placeholder="Cari Pemohon"
@@ -186,64 +159,28 @@ function RiwayatPengajuan() {
             onChange={(e) =>
               setNamaPemohon(e.target.value)
             }
-            className="
-              w-full
-              h-10
-              rounded-md
-              border
-              border-[#E7B9A7]
-              bg-white
-              px-3
-              pr-8
-              text-xs
-              outline-none
-              focus:border-[#8B0502]
-            "
+            className="w-full h-10 rounded-md border border-[#E7B9A7] bg-white px-3 pr-8 text-xs outline-none focus:border-[#8B0502]"
           />
 
           <Search
             size={16}
-            className="
-              absolute
-              right-3
-              top-1/2
-              -translate-y-1/2
-              text-gray-400
-            "
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
           />
         </div>
 
         {/* Cari NIK */}
-        <div className="relative w-34">
+        <div className="relative w-full min-w-0">
           <input
             type="text"
             placeholder="Cari NIK"
             value={nik}
             onChange={(e) => setNik(e.target.value)}
-            className="
-              w-full
-              h-10
-              rounded-md
-              border
-              border-[#E7B9A7]
-              bg-white
-              px-3
-              pr-8
-              text-xs
-              outline-none
-              focus:border-[#8B0502]
-            "
+            className="w-full h-10 rounded-md border border-[#E7B9A7] bg-white px-3 pr-8 text-xs outline-none focus:border-[#8B0502]"
           />
 
           <Search
             size={16}
-            className="
-              absolute
-              right-3
-              top-1/2
-              -translate-y-1/2
-              text-gray-400
-            "
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
           />
         </div>
 
@@ -251,19 +188,7 @@ function RiwayatPengajuan() {
         <select
           value={status}
           onChange={(e) => setStatus(e.target.value)}
-          className="
-            w-33.75
-            h-10
-            rounded-md
-            border
-            border-[#E7B9A7]
-            bg-white
-            px-3
-            text-xs
-            text-gray-600
-            outline-none
-            focus:border-[#8B0502]
-          "
+          className="w-full h-10 rounded-md border border-[#E7B9A7] bg-white px-3 text-xs text-gray-600 outline-none focus:border-[#8B0502]"
         >
           <option value="">Semua Status</option>
           <option value="diajukan">Diajukan</option>
@@ -271,18 +196,16 @@ function RiwayatPengajuan() {
         </select>
       </div>
 
-      {/* Garis */}
+      {/* GARIS */}
       <div className="border-t border-[#E7B9A7] mb-4" />
 
-      {/* =========================
-          TABEL
-      ========================= */}
-      <div className="overflow-x-auto">
-        <table className="w-full border-collapse text-xs">
+      {/* TABEL */}
+      <div className="w-full overflow-x-auto rounded-lg">
+        <table className="w-full min-w-187.5 border-collapse text-xs">
+
           <thead>
             <tr className="bg-[#F9C63D] text-[#3F1D00]">
-
-              <th className="border border-[#E5D7B0] px-3 py-2 w-11.25">
+              <th className="border border-[#E5D7B0] px-3 py-2 w-11">
                 No
               </th>
 
@@ -290,7 +213,7 @@ function RiwayatPengajuan() {
                 Pemohon
               </th>
 
-              <th className="border border-[#E5D7B0] px-3 py-2 w-5">
+              <th className="border border-[#E5D7B0] px-3 py-2">
                 NIK
               </th>
 
@@ -302,7 +225,7 @@ function RiwayatPengajuan() {
                 Status
               </th>
 
-              <th className="border border-[#E5D7B0] px-3 py-2 ">
+              <th className="border border-[#E5D7B0] px-3 py-2">
                 Tujuan Surat
               </th>
 
@@ -311,7 +234,6 @@ function RiwayatPengajuan() {
                 <br />
                 Surat
               </th>
-
             </tr>
           </thead>
 
@@ -340,7 +262,6 @@ function RiwayatPengajuan() {
                   key={item.id}
                   className="bg-white hover:bg-[#FFF8D6]"
                 >
-
                   {/* No */}
                   <td className="border border-gray-200 px-3 py-2 text-center">
                     {index + 1}
@@ -392,26 +313,12 @@ function RiwayatPengajuan() {
                           `/preview-surat/${item.id}`
                         )
                       }
-                      className="
-                        inline-flex
-                        items-center
-                        gap-1
-                        rounded-md
-                        bg-[#8B0502]
-                        px-3
-                        py-2
-                        text-[12px]
-                        text-white
-                        hover:bg-[#6F0402]
-                        transition
-                        cursor-pointer
-                      "
+                      className="inline-flex items-center gap-1 rounded-md bg-[#8B0502] px-3 py-2 text-[12px] text-white hover:bg-[#6F0402] transition cursor-pointer"
                     >
                       <FileText size={12} />
                       Lihat
                     </button>
                   </td>
-
                 </tr>
               ))
             )}

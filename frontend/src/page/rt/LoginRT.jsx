@@ -1,3 +1,4 @@
+
 import { useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import { User, LockKeyhole, Eye, EyeOff } from "lucide-react";
@@ -15,6 +16,7 @@ function LoginRT(){
       message: "",
       success: false,
     });
+
     const handleLogin = async (e) => {
         e.preventDefault();
 
@@ -56,14 +58,13 @@ function LoginRT(){
       };
 
     return(
-      <div className="min-h-screen bg-[#FFFDE4]">
+      <div className="min-h-screen bg-[#FFFDE4] px-4 py-8 sm:px-10 lg:px-12">
 
+      <div className="flex justify-center pt-8 sm:pt-16">
 
-      <div className="flex justify-center pt-16 px-4">
+        <div className="w-full max-w-97.5 bg-white rounded-xl shadow-md px-5 py-6 sm:px-7 sm:py-6">
 
-        <div className="w-full max-w-97.5 bg-white rounded-xl shadow-md px-7 py-6">
-
-          <h1 className="text-center text-2xl font-bold text-[#8B0502] mb-7">
+          <h1 className="text-center text-xl sm:text-2xl font-bold text-[#8B0502] mb-7">
             Login RT
           </h1>
 
@@ -82,7 +83,7 @@ function LoginRT(){
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 autoComplete="username"
-                className="w-full h-10 border border-gray-500 rounded-md pl-9 pr-3 text-sm outline-none focus:border-[#8B0502]"
+                className="w-full h-11 border border-gray-500 rounded-md pl-9 pr-3 text-sm outline-none focus:border-[#8B0502]"
               />
             </div>
           </div>
@@ -105,7 +106,7 @@ function LoginRT(){
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 autoComplete="current-password"
-                className="w-full h-10 border border-gray-500 rounded-md pl-9 pr-10 text-sm outline-none focus:border-[#8B0502]"
+                className="w-full h-11 border border-gray-500 rounded-md pl-9 pr-10 text-sm outline-none focus:border-[#8B0502]"
               />
 
               <button
@@ -132,7 +133,7 @@ function LoginRT(){
             <button
               type="submit"
               onClick={handleLogin}
-              className="w-40 h-10 border border-[#8B0502] rounded-md text-sm font-semibold text-[#8B0502] bg-[#FFB82E] hover:bg-[#FFD166] cursor-pointer transition-colors"
+              className="w-full sm:w-40 h-11 border border-[#8B0502] rounded-md text-sm font-semibold text-[#8B0502] bg-[#FFB82E] hover:bg-[#FFD166] cursor-pointer transition-colors"
             >
               Login
             </button>
@@ -141,11 +142,12 @@ function LoginRT(){
         </div>
 
       </div>
+
       {popup.show && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
-          <div className="w-full max-w-sm rounded-2xl bg-white p-6 text-center shadow-2xl">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4 py-6">
+          <div className="w-full max-w-sm rounded-2xl bg-white p-5 sm:p-6 text-center shadow-2xl">
             <div
-              className={`mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full ${
+              className={`mx-auto mb-4 flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-full ${
                 popup.success ? "bg-green-100" : "bg-red-100"
               }`}
             >
@@ -156,7 +158,7 @@ function LoginRT(){
               )}
             </div>
 
-            <h2 className="mb-2 text-xl font-bold text-[#8B0502]">
+            <h2 className="mb-2 text-lg sm:text-xl font-bold text-[#8B0502]">
               {popup.title}
             </h2>
 

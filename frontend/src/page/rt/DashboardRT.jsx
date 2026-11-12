@@ -1,11 +1,14 @@
+
 import {useNavigate} from "react-router-dom";
 import { useEffect, useState } from "react";
 import ProfileBadge from "../../component/rt/ProfileBadge.jsx";
 import {TriangleAlert, BadgeCheck, FileText } from "lucide-react"
 import axios from "axios";
+
 function DashboardRT(){
     const navigate = useNavigate();
     const API_URL = import.meta.env.VITE_API_URL;
+
 const [dashboard, setDashboard] = useState({
     totalPengajuan: 0,
     diajukan: 0,
@@ -62,18 +65,23 @@ useEffect(() => {
 
     fetchData();
 }, []);
+
    return(
-    <div className="min-h-screen px-10  py-8">
-       <div className="flex items-center justify-between mb-15">
-        <h1 className="text-3xl font-semibold text-[#8B0502]  ">
+    <div className="min-h-screen px-4 py-6 sm:px-6 sm:py-8 lg:px-10">
+
+       {/* Header Dashboard */}
+       <div className="flex items-center justify-between gap-3 mb-8 sm:mb-15">
+        <h1 className="text-xl sm:text-3xl font-semibold text-[#8B0502]">
           Dashboard
         </h1>
 
         <ProfileBadge/>
       </div>
 
-      <div className="bg-[#FFFBCF] shadow-xs shadow-[#8B0502] rounded-xl px-6 py-5 pt-10 ">
-        <h2 className="text-3xl font-medium text-[#8B0502] ">
+      {/* Card Selamat Datang */}
+      <div className="bg-[#FFFBCF] shadow-xs shadow-[#8B0502] rounded-xl px-4 py-6 pt-8 sm:px-6 sm:py-5 sm:pt-10">
+
+        <h2 className="text-xl sm:text-2xl lg:text-3xl font-medium text-[#8B0502] wrap-break-word">
             Selamat Datang, <span className="font-bold">{KetuaRT}</span>!
         </h2>
 
@@ -91,14 +99,21 @@ useEffect(() => {
                 <TriangleAlert size={16} className="inline-block mr-1" />
                 Profil Belum Lengkap.
             </p>
+
             <p className="mt-1 text-xs text-[#8B0502]">
                 Tanda tangan Ketua RT belum ditambahkan
             </p>
+
             <p className="mt-1 text-xs text-[#8B0502]">
                 Tanda tangan diperlukan untuk pengajuan surat pengantar
             </p>
+
             <div className="flex justify-end mt-3">
-                <button type="button" onClick={() => navigate("/profil-rt")} className="px-3 py-2 bg-[#FFC83D] border border-[#8B0502] text-[#8B0502] text-sm font-medium rounded-md cursor-pointer">
+                <button
+                    type="button"
+                    onClick={() => navigate("/profil-rt")}
+                    className="w-full sm:w-auto px-3 py-2 bg-[#FFC83D] border border-[#8B0502] text-[#8B0502] text-sm font-medium rounded-md cursor-pointer"
+                >
                     Tambahkan Tanda Tangan
                 </button>
             </div>
@@ -109,81 +124,83 @@ useEffect(() => {
                 <BadgeCheck size={16} className="inline-block mr-1" />
                 Profil anda sudah lengkap. Tanda tangan Ketua RT telah ditambahkan.
             </p>
+
             <p className="text-[#8B0502] text-medium mt-3 font-semibold mb-6">
                 Berikut ringkasan aktivitas pengajuan surat anda
             </p>
-            <div className="grid grid-cols-3 mt-10 gap-5">
 
-    {/* Total Pengajuan */}
-    <div className="bg-white rounded-xl border border-[#E7B9A7] px-5 py-10">
-        <div className="flex items-center gap-2 text-[#8B0502]">
-            <FileText size={20} />
-            <p className="text-sm font-medium">
-                Total Pengajuan
-            </p>
-        </div>
+            {/* Statistik Pengajuan */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-6 sm:mt-10 gap-3 sm:gap-5">
 
-        <p className="text-3xl font-bold text-[#8B0502] mt-3">
-            {loading ? "..." : dashboard.totalPengajuan}
-        </p>
-    </div>
+                {/* Total Pengajuan */}
+                <div className="bg-white rounded-xl border border-[#E7B9A7] px-4 py-6 sm:px-5 sm:py-10">
+                    <div className="flex items-center gap-2 text-[#8B0502]">
+                        <FileText size={20} className="shrink-0" />
+                        <p className="text-sm font-medium">
+                            Total Pengajuan
+                        </p>
+                    </div>
 
-    {/* Diajukan */}
-    <div className="bg-white rounded-xl border border-[#E7B9A7] px-5 py-10">
-        <div className="flex  gap-2 text-[#8B0502]">
-            <TriangleAlert size={20} />
-            <p className="text-sm font-medium">
-                Diajukan
-            </p>
-        </div>
+                    <p className="text-xl lg:text-2xl font-bold text-[#8B0502] mt-3">
+                        {loading ? "..." : dashboard.totalPengajuan}
+                    </p>
+                </div>
 
-        <p className="text-3xl items-center font-bold text-[#8B0502] mt-3">
-            {loading ? "..." : dashboard.diajukan}
-        </p>
-    </div>
+                {/* Diajukan */}
+                <div className="bg-white rounded-xl border border-[#E7B9A7] px-4 py-6 sm:px-5 sm:py-10">
+                    <div className="flex items-center gap-2 text-[#8B0502]">
+                        <TriangleAlert size={20} className="shrink-0" />
+                        <p className="text-sm font-medium">
+                            Diajukan
+                        </p>
+                    </div>
 
-    {/* Selesai */}
-    <div className="bg-white rounded-xl border border-[#E7B9A7] px-5 py-10">
-        <div className="flex items-center gap-2 text-[#8B0502]">
-            <BadgeCheck size={20} />
-            <p className="text-sm font-medium">
-                Selesai
-            </p>
-        </div>
+                    <p className="text-xl lg:text-2xl font-bold text-[#8B0502] mt-3">
+                        {loading ? "..." : dashboard.diajukan}
+                    </p>
+                </div>
 
-        <p className="text-3xl font-bold text-[#8B0502] mt-3">
-            {loading ? "..." : dashboard.selesai}
-        </p>
-    </div>
+                {/* Selesai */}
+                <div className="bg-white rounded-xl border border-[#E7B9A7] px-4 py-6 sm:px-5 sm:py-10">
+                    <div className="flex items-center gap-2 text-[#8B0502]">
+                        <BadgeCheck size={20} className="shrink-0" />
+                        <p className="text-sm font-medium">
+                            Selesai
+                        </p>
+                    </div>
 
-</div>
+                    <p className="text-xl lg:text-2xl font-bold text-[#8B0502] mt-3">
+                        {loading ? "..." : dashboard.selesai}
+                    </p>
+                </div>
 
-<div className="flex justify-end gap-3 mt-10">
+            </div>
 
-    <button
-        type="button"
-        onClick={() => navigate("/pengajuan-surat")}
-        className="px-4 py-2 bg-[#FFC83D] border border-[#8B0502] text-[#8B0502] text-sm font-medium rounded-md hover:bg-[#F2B82F] transition cursor-pointer"
-    >
-        Ajukan Surat Pengantar
-    </button>
+            {/* Tombol Aksi */}
+            <div className="flex flex-col sm:flex-row sm:justify-end gap-3 mt-8 sm:mt-10">
 
-    <button
-        type="button"
-        onClick={() => navigate("/riwayat-pengajuan")}
-        className="px-4 py-2 bg-[#FFC83D] border border-[#8B0502] text-[#8B0502] text-sm font-medium rounded-md hover:bg-[#F2B82F] transition cursor-pointer"
-    >
-        Riwayat Pengajuan
-    </button>
+                <button
+                    type="button"
+                    onClick={() => navigate("/pengajuan-surat")}
+                    className="w-full sm:w-auto px-4 py-2 bg-[#FFC83D] border border-[#8B0502] text-[#8B0502] text-sm font-medium rounded-md hover:bg-[#F2B82F] transition cursor-pointer"
+                >
+                    Ajukan Surat Pengantar
+                </button>
 
-</div>
+                <button
+                    type="button"
+                    onClick={() => navigate("/riwayat-pengajuan")}
+                    className="w-full sm:w-auto px-4 py-2 bg-[#FFC83D] border border-[#8B0502] text-[#8B0502] text-sm font-medium rounded-md hover:bg-[#F2B82F] transition cursor-pointer"
+                >
+                    Riwayat Pengajuan
+                </button>
+
+            </div>
             </>
-            
-           
         )}
       </div>
     </div>
-
    ) 
 }
+
 export default DashboardRT;

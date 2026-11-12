@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -10,7 +11,10 @@ function PreviewSurat() {
 
   const [pdfUrl, setPdfUrl] = useState(null);
   const API_URL = import.meta.env.VITE_API_URL;
+
   useEffect(() => {
+    let objectUrl;
+
     const generatePDF = async () => {
       try {
         const token = localStorage.getItem("token");
@@ -25,16 +29,15 @@ function PreviewSurat() {
           }
         );
 
-        const url = URL.createObjectURL(
+        objectUrl = URL.createObjectURL(
           new Blob([response.data], {
             type: "application/pdf",
           })
         );
 
-        setPdfUrl(url);
+        setPdfUrl(objectUrl);
       } catch (error) {
         console.error("Error generate surat:", error);
-
         alert("Gagal menampilkan surat");
       }
     };
@@ -42,69 +45,60 @@ function PreviewSurat() {
     generatePDF();
 
     return () => {
-      if (pdfUrl) {
-        URL.revokeObjectURL(pdfUrl);
+      if (objectUrl) {
+        URL.revokeObjectURL(objectUrl);
       }
     };
   }, [id]);
 
   return (
-    <div className="min-h-screen bg-[#FFFDE9] px-9 py-8">
+    <div className="min-h-screen bg-[#FFFDE9] px-3 py-5 sm:px-6 sm:py-8 lg:px-9">
 
       {/* Header */}
-<div className="flex items-center justify-between mb-5">
+      <div className="flex flex-col gap-4 mb-5 sm:flex-row sm:items-center sm:justify-between">
 
-  <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-center gap-3 sm:gap-4">
 
-    <button
-      type="button"
-      onClick={() => navigate("/riwayat-pengajuan")}
-      className="
-        flex
-        items-center
-        gap-2
-        text-sm
-        text-[#8B0502]
-        hover:text-[#6F0402]
-        transition
-        cursor-pointer
-      "
-    >
-      <ArrowLeft size={18} />
-      Kembali
-    </button>
+          <button
+            type="button"
+            onClick={() => navigate("/riwayat-pengajuan")}
+            className="flex items-center gap-2 text-xs sm:text-sm text-[#8B0502] hover:text-[#6F0402] transition cursor-pointer"
+          >
+            <ArrowLeft size={18} />
+            Kembali
+          </button>
 
-    <h1 className="text-2xl font-semibold text-[#8B0502]">
-      Pengajuan Surat
-    </h1>
+          <h1 className="text-lg sm:text-2xl font-semibold text-[#8B0502]">
+            Pengajuan Surat
+          </h1>
 
-  </div>
+        </div>
 
-  <ProfileBadge />
+        <div className="self-end sm:self-auto">
+          <ProfileBadge />
+        </div>
 
-</div>
+      </div>
 
       {/* Status */}
       <div className="mb-4">
-
-        <p className="text-xs text-[#8B0502]">
+        <p className="text-xs sm:text-sm text-[#8B0502]">
           Status :{" "}
           <span className="font-semibold">
             Berhasil Diajukan ke Kelurahan
           </span>
         </p>
-
       </div>
 
       {/* Preview Card */}
-      <div className="border border-[#E7B9A7] rounded-xl bg-[#FFFDE9] p-5">
+      <div className="w-full max-w-225 mx-auto border border-[#E7B9A7] rounded-xl bg-[#FFFDE9] p-3 sm:p-5">
 
         <h2 className="text-sm font-semibold text-[#8B0502] mb-3">
           Preview Surat Pengantar
         </h2>
 
         {/* PDF */}
-        <div className="w-full h-175 bg-white border border-gray-300">
+        <div className="w-full h-125 sm:h-162.5 lg:h-175 bg-white border border-gray-300 overflow-hidden">
 
           {pdfUrl ? (
             <iframe
